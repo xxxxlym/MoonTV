@@ -1,42 +1,42 @@
 项目地址：https://github.com/MoonTechLab/LunaTV（新增授权码，配置文件已经更新，授权码从项目官方渠道TG机器人获取：https://t.me/moontv_auth_bot）
 
 1.更新系统软件包
-
+```
 apt update && apt upgrade -y
-
+```
 2.安装必要的工具
-
+```
 apt install -y curl nano
-
+```
 3.安装 Docker 和 Docker Compose
 
 安装Docker：
-
+```
 curl -fsSL https://get.docker.com -o get-docker.sh
 
 sh get-docker.sh
-
+```
 启动Docker并设置开机自启：
-
+```
 systemctl start docker
 systemctl enable docker
-
+```
 安装Docker Compose：
-
+```
 curl -L "https://github.com/docker/compose/releases/download/v2.27.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
 chmod +x /usr/local/bin/docker-compose
-
+```
 4.验证安装：
-
+```
 docker --version
 docker-compose --version
 两行命令都输出了版本号，说明安装成功！
-
+```
 5.创建项目并配置 Docker Compose
 
 创建一个项目目录：
-
+```
 mkdir -p /opt/moontv
 
 进入创建的moontv文件夹：cd /opt/moontv
@@ -44,9 +44,9 @@ mkdir -p /opt/moontv
 创建并编辑 Docker Compose 配置文件：
 
 nano docker-compose.yml
-
+```
 配置文件（博客的docker-compose.yml配置文件已经更新，只添加一个参数AUTH_TOKEN，token获取通过他们项目的TG机器人获取，其他不变，按视频开始一步一步操作就可以成功）：
-
+```
 # Docker Compose 配置文件
 # 定义所有要运行的服务/容器
 
@@ -133,31 +133,32 @@ networks:
   # 定义自定义网络
   moontv-network:
     driver: bridge  # 使用桥接网络模式，使容器间可以相互通信
-
+```
 6.启动 MoonTV 项目
 
 在后台启动所有服务：
-
+```
 docker-compose up -d
-
+```
 7.查看容器运行状态：
-
+```
 docker-compose ps
-
+```
 容器的状态（STATUS）都是 Up，就说明成功了！
 
 如果哪个容器启动失败请查找容器启动日志解决
 查看容器日志（用于排查问题）
+```
 docker logs moontv-core
 docker logs moontv-redis
 docker logs moontv-watchtower
 比如出现moontv-core启动失败，输入命令docker logs moontv-core
 看到401问题 ，请确认授权码无误的情况下，在 tg 点击解除设备绑定后，然后输入命令：docker restart moontv-core 重启容器
-
+```
 查看 Watchtower 日志：
-
+```
 docker-compose logs watchtower
-
+```
 打开你的浏览器，在地址栏输入：ip:端口 （ 192.3.253.163:3000 ）
 
 8.设置这个自定义域名：
@@ -165,7 +166,7 @@ docker-compose logs watchtower
 访问nginx管理面板：ip:81（ 如：192.3.253.163:81 ）
 
 初始账号&密码：
-
+```
 Email: admin@example.com
 Password: changeme
-
+```
